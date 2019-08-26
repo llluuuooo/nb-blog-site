@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Test</title>
+                <link rel="shortcut icon" href="/static/images/favicon.png" />
+                <!-- Style Sheet-->
+                <link rel="stylesheet" href="/static/style.css"/>
+                <link rel='stylesheet' id='bootstrap-css-css'  href='/static/css/bootstrap5152.css?ver=1.0' type='text/css' media='all' />
+                <link rel='stylesheet' id='responsive-css-css'  href='/static/css/responsive5152.css?ver=1.0' type='text/css' media='all' />
+                <link rel='stylesheet' id='pretty-photo-css-css'  href='/static/js/prettyphoto/prettyPhotoaeb9.css?ver=3.1.4' type='text/css' media='all' />
+                <link rel='stylesheet' id='main-css-css'  href='/static/css/main5152.css?ver=1.0' type='text/css' media='all' />
+                <link rel='stylesheet' id='custom-css-css'  href='/static/css/custom5152.html?ver=1.0' type='text/css' media='all' />
+                <link rel="stylesheet" href="/static/css/editormd.css"/>  <!--需要改引用！！-->
+        </head>
+        <body>
+                <!-- Start of Header -->
+                <div class="header-wrapper">
+                        <header>
+                                <div class="container">
+                                        <div class="logo-container">
+                                                <!-- Website Logo -->
+                                                <a href="/"  title="Knowledge Base Theme">
+                                                        <img src="/static/images/logo3.png" alt="Knowledge Base Theme">
+                                                </a>
+                                                <span class="tag-line">技术成就未来</span>
+                                        </div>
+                                        <!-- Start of Main Navigation -->
+                                        <nav class="main-nav">
+                                                <div class="menu-top-menu-container">
+                                                        <ul id="menu-top-menu" class="clearfix">
+                                                                <li><a href="/">网站首页</a></li>
+                                                                <li><a href="articles-list.html">文章列表</a></li>
+                                                                {% if username  %}
+                                                                <li ><a href="/editor">发表博文</a></li>
+                                                                <li ><a href="/logout">登出</a></li>
+                                                                {% else%}
+                                                                <li ><a href="/login">登录/注册</a></li>
+                                                                {% endif %}
+                                                        </ul>
+                                                </div>
+                                        </nav>
+                                        <!-- End of Main Navigation -->
+                                </div>
+                        </header>
+                </div>
+                <!-- End of Header -->
+                <form method="post">
+                    {% csrf_token %}
+                <div align="center">
+                                <h1>文章标题</h1>
+                                <textarea rows="1" style="width:700px" placeholder="请输文章标题" name="title"></textarea>
+                </div>
+                <div id="layout">
+                        <div id="test-editormd">
+                                <textarea style="display:none;" name="text"></textarea>
+                        </div>
+                </div>
+
+                <div align="center">
+                        <button type="submit" style="background-color: #3f4b55; font-size: 20px; line-height: 19px; font-weight: 600; padding: 14px 30px 15px; color: #fff;" name="fabu">发布博文</button>
+                </div>
+                </form>
+                <!-- Start of Footer -->
+                <footer id="footer-wrapper">
+                        <div id="footer" class="container">
+                                <div class="row">
+
+                                        <div class="span3">
+                                                <section class="widget">
+                                                        <h3 class="title">How it works</h3>
+                                                        <div class="textwidget">
+                                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                                                                <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+                                                        </div>
+                                                </section>
+                                        </div>
+
+                                        <div class="span3">
+                                                <section class="widget"><h3 class="title">Categories</h3>
+                                                        <ul>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Advanced Techniques</a> </li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Designing in WordPress</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Server &amp; Database</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet, ">Theme Development</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Website Dev</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">WordPress for Beginners</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet, ">WordPress Plugins</a></li>
+                                                        </ul>
+                                                </section>
+                                        </div>
+
+                                </div>
+                        </div>
+                        <!-- end of #footer -->
+                <script src="/static/lib/jquery.min.js"></script>  <!--需要改引用！！-->
+                <script src="/static/lib/editormd.js"></script>  <!--需要改引用！！-->
+                <script type="text/javascript">
+                   $(function() {
+                     var testEditor = editormd("test-editormd", {
+                       width: "90%",
+                       height: 640,
+                       markdown : "",
+                       path : '/static/lib/',
+                     });
+                   });
+                </script>
+        </body>
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+        <html lang="zh-cn">
+        <head>
+                <!-- META TAGS -->
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+                <title>Knowledge Base Theme</title>
+
+                <link rel="shortcut icon" href="/static/images/favicon.png" />
+
+
+
+
+                <!-- Style Sheet-->
+                <link rel="stylesheet" href="/static/style.css"/>
+                <link rel='stylesheet' id='bootstrap-css-css'  href='/static/css/bootstrap5152.css?ver=1.0' type='text/css' media='all' />
+                <link rel='stylesheet' id='responsive-css-css'  href='/static/css/responsive5152.css?ver=1.0' type='text/css' media='all' />
+                <link rel='stylesheet' id='pretty-photo-css-css'  href='/static/js/prettyphoto/prettyPhotoaeb9.css?ver=3.1.4' type='text/css' media='all' />
+                <link rel='stylesheet' id='main-css-css'  href='/static/css/main5152.css?ver=1.0' type='text/css' media='all' />
+                <link rel='stylesheet' id='custom-css-css'  href='/static/css/custom5152.html?ver=1.0' type='text/css' media='all' />
+                <style type="text/css">
+            			.blogLikeBtn
+            			{
+                    bottom: 0px;
+                    right: 0px;
+                    line-height: 18px;
+                    font-weight: 600;
+                    padding: 3px 5px 3px 20px;
+                    border: 2px solid #f2f2f2;
+            			}
+            			.off
+            			{
+            				background: url("/static/images/like.png") no-repeat 6px 8px;
+            			}
+            			.on
+            			{
+            				background: url("/static/images/like.png") no-repeat 6px -22px;
+            			}
+            		</style>
+
+                <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+                <!--[if lt IE 9]>
+                <script src="/static/js/html5.js"></script></script>
+                <![endif]-->
+
+        </head>
+
+        <body>
+                <!-- Start of Header -->
+                <div class="header-wrapper">
+                        <header>
+                                <div class="container">
+                                        <div class="logo-container">
+                                                <!-- Website Logo -->
+                                                <a href="/"  title="Knowledge Base Theme">
+                                                        <img src="/static/images/logo3.png" alt="Knowledge Base Theme">
+                                                </a>
+                                                <span class="tag-line">技术成就未来</span>
+                                        </div>
+                                        <!-- Start of Main Navigation -->
+                                        <nav class="main-nav">
+                                                <div class="menu-top-menu-container">
+                                                        <ul id="menu-top-menu" class="clearfix">
+                                                                <li><a href="/">网站首页</a></li>
+                                                                <li><a href="articles-list.html">文章列表</a></li>
+                                                            {% if username  %}
+                                                                <li ><a href="/editor">发表博文</a></li>
+                                                                <li ><a href="/logout">登出</a></li>
+                                                            {% else%}
+                                                                <li ><a href="/login">登录/注册</a></li>
+                                                            {% endif %}
+                                                        </ul>
+                                                </div>
+                                        </nav>
+                                        <!-- End of Main Navigation -->
+                                </div>
+                        </header>
+                </div>
+                <!-- End of Header -->
+                <!-- Start of Page Container -->
+                <div class="page-container">
+                        <div class="container">
+                                <div class="row">
+                                        <!-- start of page content -->
+                      									<table width="100%">
+                      									  <tr>
+                      											<td width="75%">
+                      												<table width="100%" overflow:auto>
+                      													<tr>
+                      														<td><h1 align="center">{{ title }}</h1></td>
+                      													</tr>
+                      													<tr>
+                      														<td><h5 align="left">发布时间:{{ time }}   已浏览{{ viewNumber }}次   作者：<a>{{ writer }}</a></h5></td>
+                      													</tr>
+                      													<tr>
+                      														<td>
+                                                                                <h5 align="left">
+                                                                                    博文标签：
+                                                                                    {% for foo in tags  %}
+                                                                                        <a>{{ foo }}</a>
+                                                                                    {% endfor %}
+                                                                                </h5>
+                                                                            </td>
+                      													</tr>
+                      													<tr>
+                      														<td width="100%" align="left">
+
+
+                                                        <div id="test-editormd-view2">
+                                                          <textarea id="append-test" style="display:none;">
+{{ body }}
+                                                          </textarea>
+                                                        </div>
+
+
+                      														</td>
+                      													</tr>
+
+                                                                        <form method="post">
+                                                                        {% csrf_token %}
+
+<tr>
+                                                  <td align="left">
+                                                    <button id="blogLikeButton" onclick="btnChange()" class="blogLikeBtn off" name="blogLikeButton">点赞这篇博文 {{ likeNumber }}</button>
+                                                  </td>
+                                                  <script type="text/javascript">
+                                              			function btnChange()
+                                              			{
+                                              				var btn = document.getElementById("blogLikeButton");
+                                              				if (btn.className == "blogLikeBtn off")
+                                              					btn.className="blogLikeBtn on";
+                                              				else
+                                              					btn.className="blogLikeBtn off";
+                                              			}
+                                              		</script>
+                                                </tr>
+                                                                        </form>
+
+                      													<tr>
+                      														<td align="center">
+                      																<table width="100%" align="left">
+                      																	<tr>
+                      																		<td><h3>评论区</h3></td>
+                      																	</tr>
+                                                                                        {% for foo in reviews %}
+                                                                                            <tr height="60">
+                      																		    <td><a>{{ foo.user.user_name }}</a>: {{ foo.review_body }}</td>
+                      																	    </tr>
+                                                                                        {% endfor %}
+                      																</table>
+                      														</td>
+                      													</tr>
+                                                <tr>
+                                                  <td align="center">
+                                                    <table width="100%" align="left">
+                                                      <tr>
+                                                        <td><h3>发布评论</h3></td>
+                                                      </tr>
+                                                        <form method="post">
+                                                            {% csrf_token %}
+                                                                <tr>
+                                                                    <td><textarea rows="4" style="width:700px" name="rev" id="rev" title="请输入你的评论。" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button type="submit" style="background-color: #3f4b55; font-size: 20px; line-height: 19px; font-weight: 600; padding: 14px 30px 15px; color: #fff;" name="review">发表评论</button></td>
+                                                                </tr>
+                                                        </form>
+                                                    </table>
+                                                  </td>
+                                                </tr>
+                      												</table>
+                      											</td>
+
+
+                      											<td width="25%" valign="top" align="center">
+                      												<table>
+                      													<tr>
+                      														<td>
+                      															<table>
+                      																<tr>
+                      																	<td><h3>最新文章</h3></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">最新文章1</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">最新文章2</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">最新文章3</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">最新文章4</font></a></td>
+                      																</tr>
+                      															</table>
+                      														</td>
+                      													</tr>
+                      													<tr>
+                      														<td>
+                      															<table>
+                      																<tr>
+                      																	<td><h3>归档</h3></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">2019年8月</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">2019年7月</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">2019年6月</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">2019年5月</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">2019年4月</font></a></td>
+                      																</tr>
+                      															</table>
+                      														</td>
+                      													</tr>
+                      													<tr>
+                      														<td>
+                      															<table>
+                      																<tr>
+                      																	<td><h3>标签云</h3></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">动态规划 1</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">操作系统 1</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">Java 1</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">C++ 1</font></a></td>
+                      																</tr>
+                      																<tr height="30">
+                      																	<td><a><font size="+1">Django 1</font></a></td>
+                      																</tr>
+                      															</table>
+                      														</td>
+                      													</tr>
+                      												</table>
+                      											</td>
+                      										</tr>
+                      									</table>
+                                        <!-- end of page content -->
+                                </div>
+                        </div>
+                </div>
+                <!-- End of Page Container -->
+                <!-- Start of Footer -->
+                <footer id="footer-wrapper">
+                        <div id="footer" class="container">
+                                <div class="row">
+                                        <div class="span3">
+                                                <section class="widget">
+                                                        <h3 class="title">How it works</h3>
+                                                        <div class="textwidget">
+                                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                                                                <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+                                                        </div>
+                                                </section>
+                                        </div>
+
+                                        <div class="span3">
+                                                <section class="widget"><h3 class="title">Categories</h3>
+                                                        <ul>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Advanced Techniques</a> </li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Designing in WordPress</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Server &amp; Database</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet, ">Theme Development</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Website Dev</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">WordPress for Beginners</a></li>
+                                                                <li><a href="#" title="Lorem ipsum dolor sit amet, ">WordPress Plugins</a></li>
+                                                        </ul>
+                                                </section>
+                                        </div>
+                                </div>
+                        </div>
+                </footer>
+                <!-- End of Footer -->
+                <a href="#top" id="scroll-top"></a>
+                <script src="/static/lib/jquery.min.js"></script>
+                <script src="/static/lib/marked.min.js"></script>
+                <script src="/static/lib/prettify.min.js"></script>
+                <script src="/static/lib/raphael.min.js"></script>
+                <script src="/static/lib/underscore.min.js"></script>
+                <script src="/static/lib/sequence-diagram.min.js"></script>
+                <script src="/static/lib/flowchart.min.js"></script>
+                <script src="/static/lib/jquery.flowchart.min.js"></script>
+                <script src="/static/lib/editormd.js"></script>
+                <script type="text/javascript">
+                    $(function() {
+                        var testEditormdView2;
+                        testEditormdView2 = editormd.markdownToHTML("test-editormd-view2", {
+                            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                            emoji           : true,
+                            taskList        : true,
+                            tex             : true,  // 默认不解析
+                            flowChart       : true,  // 默认不解析
+                            sequenceDiagram : true,  // 默认不解析
+                        });
+                    });
+                </script>
+                <script type='text/javascript' src='/static/js/jquery-1.8.3.min.js'></script>
+                <script type='text/javascript' src='/static/js/jquery.easing.1.3.js'></script>
+                <script type='text/javascript' src='/static/js/prettyphoto/jquery.prettyPhoto.js'></script>
+                <script type='text/javascript' src='/static/js/jflickrfeed.js'></script>
+                <script type='text/javascript' src='/static/js/jquery.liveSearch.js'></script>
+                <script type='text/javascript' src='/static/js/jquery.form.js'></script>
+                <script type='text/javascript' src='/static/js/jquery.validate.min.js'></script>
+                <script type='text/javascript' src='/static/js/custom.js'></script>
+        </body>
+</html>
